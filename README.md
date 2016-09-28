@@ -1,5 +1,5 @@
 # BaiduyunSpider
-包含百度云网盘爬虫、网站前后端、搜索，整套服务。
+包含百度云网盘爬虫、网站前后端、搜索，整套服务。http://www.githubs.cn/project/16085
 
 ![爱百应](screenshot1.png)
 
@@ -40,6 +40,10 @@ __TODO__
 
 
 
+
+## 讨论交流
+
+有任何疑问，请在 [github 中文社区](http://www.githubs.cn/topic/118) 发帖。稍后我会把安装部署教程，发布在上面
 
 ## License
 
