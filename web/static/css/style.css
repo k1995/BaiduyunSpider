@@ -1,0 +1,17 @@
+body{padding-top:35px;}
+.panel{border-radius:0;}
+li{line-height:200%;}
+ul,ol{padding:0; list-style:none;}
+.glyphicon,.fa{ margin-right:5px;}
+.nbr{display:block; white-space:nowrap;text-overflow:ellipsis; overflow:hidden;}
+.text-hint{color:#333;}
+a{color:#00c;}
+#result-ls h3 em{color:#c00;font-weight:normal;}
+.tip{font-size:13px; color:#}
+.brand{display:inline-table; float:left; width:140px; height:35px;}
+@media (max-width:992px){
+.brand{display:none;}	
+}
+/*#cat-ls li{white-space:nowrap;text-overflow:ellipsis; overflow:hidden;}*/
+#search-bar a{background:#fff;color:#666;border-radius:0;font-size:13px;}
+#search-bar .active{border-bottom: 3px solid #dd4b39;color:#dd4b39;font-weight:bold;}
