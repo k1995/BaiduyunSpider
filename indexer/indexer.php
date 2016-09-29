@@ -1,8 +1,8 @@
 #!/usr/local/php/bin/php
 <?php
-# 下面请路径请更换你实际的xunsearch提供的 php sdk 路径
+# 将$prefix替换为你网站部署的根路径
 # 参考 url: http://xunsearch.com/doc/php/guide/start.installation
-require 'web/application/helpers/xs/lib/XS.php';
+require '$prefix/application/helpers/xs/lib/XS.php';
 
 class Db{
 
