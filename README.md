@@ -43,7 +43,9 @@ __TODO__
 
 ## 讨论交流
 
-有任何疑问，请在 [github 中文社区](http://www.githubs.cn/topic/118) 发帖。稍后我会把安装部署教程，发布在上面
+有任何疑问，请在 [github 中文社区](http://www.githubs.cn/topic/118) 发帖。
+
+[安装教程](http://www.githubs.cn/post/22)
 
 ## License
 
