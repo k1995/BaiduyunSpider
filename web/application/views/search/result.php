@@ -91,7 +91,7 @@ background-position:-421px -83px;
         </div>
         <div id="tip">
             找到约 <?php echo $found?> 条结果<nobr> （用时 <?php echo $time_used?>秒）&nbsp;</nobr>
-            <a style="float:right" href="http://pan.ibying.com/search?q=<?php echo urlencode("$key_word")."&type=pan"?>">使用深度搜索</a>
+            <a style="float:right" href="http://www.ibying.com/search?q=<?php echo urlencode("$key_word")."&type=pan"?>">使用深度搜索</a>
         </div>
         <style type="text/css">
               .search-tip{margin-top:20px;line-height:200%;}
