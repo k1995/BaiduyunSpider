@@ -8,24 +8,40 @@ class Welcome extends CI_Controller {
 		$this->output->cache(30);
 		$this->load->database();
 
-		$rs = $this->db->query("SELECT count(*) AS fetched FROM share_file WHERE create_time>".strtotime(date('Y-m-d')));
 		#今日收录数
-		$rs = $rs->row();
-		$fetched = $rs->fetched;
+		$fetched = 0;
+
+		$row = $this->db->select('count(*)')
+			->where('create_time>', strtotime(date('Y-m-d')))
+			->get('share_file')
+			->row_array();
+
+		if($row){
+			$fetched = $row['count(*)'];
+		}
 
 		#如果今日还没有收录，则显示昨日的，主要发生在凌晨的时候
 		if(!$fetched){
 
 			$rs = $this->db->query("SELECT count(*) AS fetched FROM share_file WHERE create_time>".strtotime(date('Y-m-d',strtotime('-1 day'))));
 			$rs->row();
-			#昨日收录数
-			$yesday_fetched = $rs->fetched;	
+
+			$row = $this->db->select('count(*)')
+				->where('create_time>', strtotime(date('Y-m-d',strtotime('-1 day'))))
+				->get('share_file')
+				->row_array();
+
+			if($row){
+				$yesday_fetched = $row['count(*)'];
+			}else{
+				$yesday_fetched = 0;
+			}
 		}else{
 			$yesday_fetched = 0;
 		}
 
 		$data=array(
-			'fetched' 			=> $fetched+10000,
+			'fetched' 			=> $fetched+10000,// 基数10000，为了好看...
 			'yesday_fetched'	=> $yesday_fetched+10000,
 			'type' 				=> 'all'
 		);
