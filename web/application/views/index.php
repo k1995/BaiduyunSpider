@@ -31,9 +31,9 @@ load_template('public/header',array(
 </div>
 <center>
   <?php if($fetched>=0):?>
-    <span class="f">今日已收录：<b><?php echo $fetched ?></b>(<?php echo date("h:i:s")?>)</span>
+    <span class="f">今日已收录：<b><?php echo $fetched ?></b>(<?php echo date("h:i:s a")?>)</span>
   <?php else:?>
-    <span class="f">昨日收录：<b><?php echo $yesday_fetched ?></b>(<?php echo date("h:i:s")?>)</span>
+    <span class="f">昨日收录：<b><?php echo $yesday_fetched ?></b>(<?php echo date("h:i:s a")?>)</span>
   <?php endif;?>
   <a class="f" href="/spider-list">最新收录</a>
   <div id="tagscloud">
