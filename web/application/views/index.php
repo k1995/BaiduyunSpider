@@ -1,5 +1,17 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
+/*
+ *--------------------------------------------     
+ *
+ *  本程序由 Github 中文社区发布
+ *      
+ *  Github 仓库: https://github.com/k1995/BaiduyunSpider
+ * 
+ *  安装教程：http://www.githubs.cn/post/22
+ *
+ *  疑问？解答：http://www.githubs.cn/topic/118
+ * ----------------------------------------*/
+ 
 load_template('public/header',array(
   'title'        => $this->config->item('site_title').'，'.$this->config->item('sub_title'),
   'keywords'     => $this->config->item('key_words'),

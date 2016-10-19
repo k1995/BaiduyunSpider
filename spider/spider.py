@@ -2,7 +2,19 @@
 import urllib2,re,argparse,json,time
 import MySQLdb as mdb
 import metautils,traceback,Queue,socket
-
+"""
+/*
+ *--------------------------------------------		 
+ *
+ * 	本程序由 [Github 中文社区](http://www.githubs.cn/)发布
+ *		  
+ * 	Github 仓库: https://github.com/k1995/BaiduyunSpider
+ * 
+ * 	安装教程：http://www.githubs.cn/post/22
+ *
+ *  疑问？解答：http://www.githubs.cn/topic/118
+ * ----------------------------------------*/
+"""
 
 DB_HOST='127.0.0.1'
 DB_PORT='3306'

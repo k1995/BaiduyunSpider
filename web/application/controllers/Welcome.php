@@ -1,5 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+/*
+ *--------------------------------------------		 
+ *
+ * 	本程序由 [Github 中文社区](http://www.githubs.cn/)发布
+ *		  
+ * 	Github 仓库: https://github.com/k1995/BaiduyunSpider
+ * 
+ * 	安装教程：http://www.githubs.cn/post/22
+ *
+ *  疑问？解答：http://www.githubs.cn/topic/118
+ * ----------------------------------------*/
+
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
 
