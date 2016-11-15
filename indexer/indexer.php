@@ -22,7 +22,8 @@ class Db{
 			die('Could not connect Mysql!\n:'.mysql_error());
 		}
 		mysql_select_db($this->db_name,$this->conn);
-		//$this->query('set names='.$this->charset);
+		mysql_query("set character set '".$this->charset."'"); 
+		mysql_query("set names '".$this->charset."'");
 	}
 
 	public function query($sql){
