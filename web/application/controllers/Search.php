@@ -147,7 +147,7 @@ class Search extends CI_Controller {
 
 	private function _search($kw='', $type='', $order=''){
 
-		$time_start=microtime();
+		$time_start=microtime(true);
 
 		$kw=trim($kw);
 		$type=trim($type);
@@ -245,7 +245,7 @@ class Search extends CI_Controller {
 			);
 		}
 
-		$time_end=microtime();
+		$time_end=microtime(true);
 		$time_used=$time_end-$time_start;
 
 		$data = array(
