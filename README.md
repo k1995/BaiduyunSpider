@@ -1,4 +1,5 @@
 # BaiduyunSpider
+【站长交流群：340604696】 验证码:github
 > 新版本正在使用Node.js重构中，你可以切换到 2.x-node 分支查看进度
 
 包含百度云网盘爬虫、网站前后端、搜索，整套服务。http://www.githubs.cn/project/16085
