@@ -1,7 +1,6 @@
 # 最新自动登录百度云，抓取订阅用户分享文件请联系邮箱（付费）。
 # BaiduyunSpider
-> 新版本正在使用Node.js重构中，你可以切换到 2.x-node 分支查看进度
-
+> 新版本在dev分支开发中。因旧接口失效，master分支代码不可用
 包含百度云网盘爬虫、网站前后端、搜索，整套服务。http://www.githubs.cn/project/16085
 
 ![爱百应](screenshot1.png)
