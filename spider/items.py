@@ -8,7 +8,38 @@
 import scrapy
 
 
-class SpiderItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class FileItem(scrapy.Item):
+    url = scrapy.Field()
+    fs_id = scrapy.Field()
+    server_filename = scrapy.Field()
+    size = scrapy.Field()
+    server_mtime = scrapy.Field()
+    server_ctime = scrapy.Field()
+    local_mtime = scrapy.Field()
+    local_ctime = scrapy.Field()
+    isdir = scrapy.Field()
+    isdelete = scrapy.Field()
+    status = scrapy.Field()
+    category = scrapy.Field()
+    share = scrapy.Field()
+    path_md5 = scrapy.Field()
+    path = scrapy.Field()
+    md5 = scrapy.Field()
+    thumbs = scrapy.Field()
+    dCnt = scrapy.Field()
+    ctime = scrapy.Field()
+    expiredType = scrapy.Field()
+    sharesuk = scrapy.Field()
+    pansuk = scrapy.Field()
+    uk = scrapy.Field()
+    last_updated = scrapy.Field()
+
+
+class UserItem(scrapy.Item):
+    uname = scrapy.Field()
+    avatar_url = scrapy.Field()
+    uk = scrapy.Field()
+    third = scrapy.Field()
+    relation_type = scrapy.Field()
+    last_updated = scrapy.Field()
+
