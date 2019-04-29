@@ -1,2 +1,3 @@
 pymongo
 scrapy>=1.1
+scrapy_redis

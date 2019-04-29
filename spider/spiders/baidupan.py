@@ -1,17 +1,20 @@
 # -*- coding: utf-8 -*-
 import datetime
 
-import scrapy
 import re
 import json
 
+import scrapy
 from spider.items import FileItem, UserItem
+from scrapy_redis.spiders import RedisSpider
 
 
-class BaidupanSpider(scrapy.Spider):
+class BaidupanSpider(RedisSpider):
     name = 'baidupan'
-    # TODO:
-    start_urls = ['https://pan.baidu.com/s/17BtXyO-i02gsC7h4QsKexg']
+
+    def make_request_from_data(self, data):
+        url = data.decode('utf-8')
+        return scrapy.Request(url, dont_filter=False)
 
     def parse(self, response):
         if response.request.meta.get('redirect_urls'):
