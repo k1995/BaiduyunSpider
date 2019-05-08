@@ -1,45 +1,58 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import MUIDataTable from "mui-datatables";
-
+import { connect } from 'react-redux'
 import PageTitle from '../../components/PageTitle';
+import { fetchUsers } from './UserState'
 
-const datatableData = [
-	["Joe James", "Example Inc.", "Yonkers", "NY"],
-	["John Walsh", "Example Inc.", "Hartford", "CT"],
-	["Bob Herm", "Example Inc.", "Tampa", "FL"],
-	["James Houston", "Example Inc.", "Dallas", "TX"],
-	["Prabhakar Linwood", "Example Inc.", "Hartford", "CT"],
-	["Kaui Ignace", "Example Inc.", "Yonkers", "NY"],
-	["Esperanza Susanne", "Example Inc.", "Hartford", "CT"],
-	["Christian Birgitte", "Example Inc.", "Tampa", "FL"],
-	["Meral Elias", "Example Inc.", "Hartford", "CT"],
-	["Deep Pau", "Example Inc.", "Yonkers", "NY"],
-	["Sebastiana Hani", "Example Inc.", "Dallas", "TX"],
-	["Marciano Oihana", "Example Inc.", "Yonkers", "NY"],
-	["Brigid Ankur", "Example Inc.", "Dallas", "TX"],
-	["Anna Siranush", "Example Inc.", "Yonkers", "NY"],
-	["Avram Sylva", "Example Inc.", "Hartford", "CT"],
-	["Serafima Babatunde", "Example Inc.", "Tampa", "FL"],
-	["Gaston Festus", "Example Inc.", "Tampa", "FL"],
-];
 
-const Users = props => (
-  <React.Fragment>
-    <PageTitle title="分享者" />
-    <Grid container spacing={32}>
-      <Grid item xs={12}>
-        <MUIDataTable
-          title="分享者列表"
-          data={datatableData}
-          columns={["Name", "Company", "City", "State"]}
-          options={{
-						filterType: 'checkbox',
-					}}
-        />
-      </Grid>
-    </Grid>
-  </React.Fragment>
-);
+class Users extends React.Component {
 
-export default Users;
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(fetchUsers());
+  }
+
+  render() {
+  	const { users } = this.props['users'];
+  	let data = users.map(user => [user['uname'], user['avatar_url'], user['uk'], user['last_updated']]);
+    let columns = [
+    	"昵称",
+			{
+				name: "Location",
+        options: {
+          filter: true,
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return (
+              <img width={30} src={value}/>
+            );
+          },
+        }
+			},
+			"UK",
+			"更新时间"
+		];
+
+  	return (
+      <React.Fragment>
+        <PageTitle title="分享者" />
+        <Grid container spacing={32}>
+          <Grid item xs={12}>
+            <MUIDataTable
+              title="分享者列表"
+              data={data}
+              columns={columns}
+              options={{
+                filterType: 'checkbox',
+              }}
+            />
+          </Grid>
+        </Grid>
+      </React.Fragment>
+    );
+	}
+}
+
+
+const mapStateToProps = state => state;
+export default connect(mapStateToProps)(Users)

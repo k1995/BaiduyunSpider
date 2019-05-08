@@ -5,7 +5,7 @@ import reducers from './reducers';
 
 const store = createStore(
   reducers,
-  applyMiddleware(ReduxThunk)
+  applyMiddleware(ReduxThunk),
 );
 
 export default store;
