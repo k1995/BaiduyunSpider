@@ -22,7 +22,8 @@ const Layout = ({ classes, isSidebarOpened, toggleSidebar }) => (
           <div className={classes.fakeToolbar} />
           <Switch>
             <Route path="/app/users" component={Users} />
-            <Route path="/app/dashboard" component={Dashboard} />
+            {/*<Route path="/app/dashboard" component={Dashboard} />*/}
+            <Route path="/app/dashboard" render={() => <Redirect to="/app/files" />} />
             <Route path="/app/files" component={Files} />
           </Switch>
         </div>

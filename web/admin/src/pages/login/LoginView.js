@@ -38,15 +38,15 @@ const Login = ({ classes, ...props }) => (
             <Typography variant="h1" className={classes.greeting}>
               Welcome!
             </Typography>
-            <Button size="large" className={classes.googleButton}>
-              <img src={google} alt="google" className={classes.googleIcon} />
-              &nbsp;Sign in with Google
-            </Button>
-            <div className={classes.formDividerContainer}>
-              <div className={classes.formDivider} />
-              <Typography className={classes.formDividerWord}>or</Typography>
-              <div className={classes.formDivider} />
-            </div>
+            {/*<Button size="large" className={classes.googleButton}>*/}
+              {/*<img src={google} alt="google" className={classes.googleIcon} />*/}
+              {/*&nbsp;Sign in with Google*/}
+            {/*</Button>*/}
+            {/*<div className={classes.formDividerContainer}>*/}
+              {/*<div className={classes.formDivider} />*/}
+              {/*<Typography className={classes.formDividerWord}>or</Typography>*/}
+              {/*<div className={classes.formDivider} />*/}
+            {/*</div>*/}
             <Fade in={props.error}>
               <Typography color="secondary" className={classes.errorMessage}>
                 Something is wrong with your login or password :(
@@ -188,21 +188,21 @@ const Login = ({ classes, ...props }) => (
                 </Button>
               )}
             </div>
-            <div className={classes.formDividerContainer}>
-              <div className={classes.formDivider} />
-              <Typography className={classes.formDividerWord}>or</Typography>
-              <div className={classes.formDivider} />
-            </div>
-            <Button
-              size="large"
-              className={classnames(
-                classes.googleButton,
-                classes.googleButtonCreating
-              )}
-            >
-              <img src={google} alt="google" className={classes.googleIcon} />
-              &nbsp;Sign in with Google
-            </Button>
+            {/*<div className={classes.formDividerContainer}>*/}
+              {/*<div className={classes.formDivider} />*/}
+              {/*<Typography className={classes.formDividerWord}>or</Typography>*/}
+              {/*<div className={classes.formDivider} />*/}
+            {/*</div>*/}
+            {/*<Button*/}
+              {/*size="large"*/}
+              {/*className={classnames(*/}
+                {/*classes.googleButton,*/}
+                {/*classes.googleButtonCreating*/}
+              {/*)}*/}
+            {/*>*/}
+              {/*<img src={google} alt="google" className={classes.googleIcon} />*/}
+              {/*&nbsp;Sign in with Google*/}
+            {/*</Button>*/}
           </React.Fragment>
         )}
       </div>

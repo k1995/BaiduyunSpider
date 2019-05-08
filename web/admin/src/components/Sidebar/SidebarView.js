@@ -16,7 +16,7 @@ import classNames from 'classnames';
 import SidebarLink from './components/SidebarLink/SidebarLinkContainer';
 
 const structure = [
-  { id: 0, label: '仪表盘', link: '/app/dashboard', icon: <HomeIcon /> },
+  // { id: 0, label: '仪表盘', link: '/app/dashboard', icon: <HomeIcon /> },
   { id: 1, label: '分享', link: '/app/files', icon: <ShareIcon /> },
   { id: 2, label: '分享者', link: '/app/users', icon: <UserIcon /> },
 ];

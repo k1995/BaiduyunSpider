@@ -19,9 +19,8 @@ class Users extends React.Component {
     let columns = [
     	"昵称",
 			{
-				name: "Location",
+				name: "头像",
         options: {
-          filter: true,
           customBodyRender: (value, tableMeta, updateValue) => {
             return (
               <img width={30} src={value}/>
