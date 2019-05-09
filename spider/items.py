@@ -29,6 +29,7 @@ class FileItem(scrapy.Item):
     dCnt = scrapy.Field()
     ctime = scrapy.Field()
     expiredType = scrapy.Field()
+    expires = scrapy.Field()
     sharesuk = scrapy.Field()
     pansuk = scrapy.Field()
     uk = scrapy.Field()
