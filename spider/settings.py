@@ -95,3 +95,4 @@ ITEM_PIPELINES = {
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 MONGO_URI = 'mongodb://127.0.0.1:27017'
+REDIS_URL = 'redis://127.0.0.1:6379'

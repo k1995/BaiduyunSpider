@@ -2,9 +2,12 @@ from flask import Flask, jsonify, request
 from pymongo import MongoClient
 from spider import settings
 from utils.mongoflask import MongoJSONEncoder, ObjectIdConverter
+from flask_cors import CORS
+from redis import StrictRedis
 
 # Flask
 app = Flask(__name__)
+CORS(app)
 app.json_encoder = MongoJSONEncoder
 app.url_map.converters['objectid'] = ObjectIdConverter
 
@@ -13,6 +16,9 @@ mongo = MongoClient(settings.MONGO_URI)
 db = mongo['baidupan']
 files = db.share_files
 users = db.share_users
+
+# Redis
+redis = StrictRedis.from_url(settings.REDIS_URL)
 
 # Common settings
 page_size = 20
@@ -38,6 +44,20 @@ def share_users():
         'has_more': get_offset() + page_size < count,
         'items': list(items)
     })
+
+
+@app.route("/addUrl", methods=['POST'])
+def add_url():
+    from spider.spiders.baidupan import BaidupanSpider
+    queue_key = BaidupanSpider.name + ":start_urls"
+    url = request.form.get('url')
+    if url is None or not url.startswith("https://pan.baidu.com/s/"):
+        return "URL格式不对"
+    try:
+        redis.lpush(queue_key, url)
+        return "ok"
+    except Exception as e:
+        return repr(e)
 
 
 def get_offset():
