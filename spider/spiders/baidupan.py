@@ -55,7 +55,7 @@ class BaidupanSpider(RedisSpider):
             dCnt=int(data["dCnt"]),
             ctime=int(data["ctime"]),
             expiredType=data["expiredType"],
-            expires=int(data["ctime"]) + data["expiredType"],
+            expires=int(data["ctime"]) + data["expiredType"] if data["expiredType"] > 0 else 0,
             sharesuk=data["sharesuk"],
             pansuk=data["pansuk"],
             uk=data["uinfo"]['uk'],
