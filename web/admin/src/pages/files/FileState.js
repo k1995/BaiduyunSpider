@@ -1,6 +1,8 @@
 export const initialState = {
   isLoading: false,
   files: [],
+  total: 0,
+  hasMore: false,
   error: null,
   task: {
     pushing: false,
@@ -22,6 +24,8 @@ export const requestFiles = () => ({
 export const receiveFiles = (json) => ({
   type: RECEIVE_FILES,
   files: json.items,
+  total: json.total,
+  hasMore: json.has_more,
 });
 
 export const taskPushError = (error) => ({
@@ -47,9 +51,9 @@ export const pushUrl = (url) => dispatch => {
   });
 };
 
-export const fetchFiles = (page) => dispatch => {
+export const fetchFiles = (page = 1, size = 10) => dispatch => {
   dispatch(requestFiles());
-  return fetch('/share_files')
+  return fetch(`/share_files?page=${page}&size=${size}`)
     .then(response => response.json())
     .then(json => dispatch(receiveFiles(json)));
 };
@@ -66,6 +70,8 @@ export default function FilesReducer(state = initialState, { type, ...payload })
         ...state,
         isLoading: false,
         files: payload.files,
+        total: payload.total,
+        hasMore: payload.has_more,
         error: null
       };
     case TASK_PUSHING:

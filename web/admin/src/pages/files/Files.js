@@ -43,20 +43,20 @@ class Files extends React.Component {
 	};
 
 	componentDidMount() {
-		const { dispatch } = this.props;
-		dispatch(fetchFiles());
+    this.props.dispatch(fetchFiles());
 	}
 
 	render() {
-		const { files, task } = this.props['files'];
-		let data = files.map(file => [
+		const { files, task, total } = this.props['files'];
+		const data = files.map(file => [
 			[file['url'], file['server_filename']],
 			format(file['ctime'] * 1000, 'zh_CN'),
 			prettyBytes(file['size']),
 			file['_id'],
 			file['last_updated']]
 		);
-		let columns = [
+
+		const columns = [
       {
         name: "文件名",
         options: {
@@ -73,7 +73,16 @@ class Files extends React.Component {
       "更新时间"
 		];
 
-		const AddTask = () => (
+		const options = {
+      count: total,
+      serverSide: true,
+      onTableChange: (action, tableState) => {
+        const page = tableState.page + 1;
+        this.props.dispatch(fetchFiles(page, tableState.rowsPerPage));
+      }
+    };
+
+    const AddTask = () => (
       <Dialog open={this.state.open || task.pushing}
 							onClose={this.switchDialogOpen}>
         <DialogTitle>新增采集任务</DialogTitle>
@@ -119,9 +128,7 @@ class Files extends React.Component {
 							title="文件列表"
 							data={data}
 							columns={columns}
-							options={{
-								filterType: 'checkbox',
-							}}
+							options={options}
 						/>
 					</Grid>
 				</Grid>

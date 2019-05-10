@@ -4,19 +4,19 @@ import MUIDataTable from "mui-datatables";
 import { connect } from 'react-redux'
 import PageTitle from '../../components/PageTitle';
 import { fetchUsers } from './UserState'
+import {fetchFiles} from "../files/FileState";
 
 
 class Users extends React.Component {
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(fetchUsers());
+    this.props.dispatch(fetchUsers());
   }
 
   render() {
-  	const { users } = this.props['users'];
-  	let data = users.map(user => [user['uname'], user['avatar_url'], user['uk'], user['last_updated']]);
-    let columns = [
+  	const { users, total } = this.props['users'];
+  	const data = users.map(user => [user['uname'], user['avatar_url'], user['uk'], user['last_updated']]);
+    const columns = [
     	"昵称",
 			{
 				name: "头像",
@@ -28,6 +28,15 @@ class Users extends React.Component {
 			"更新时间"
 		];
 
+    const options = {
+      count: total,
+      serverSide: true,
+      onTableChange: (action, tableState) => {
+        const page = tableState.page + 1;
+        this.props.dispatch(fetchUsers(page, tableState.rowsPerPage));
+      }
+    };
+
   	return (
       <React.Fragment>
         <PageTitle title="分享者" />
@@ -37,9 +46,7 @@ class Users extends React.Component {
               title="分享者列表"
               data={data}
               columns={columns}
-              options={{
-                filterType: 'checkbox',
-              }}
+              options={options}
             />
           </Grid>
         </Grid>

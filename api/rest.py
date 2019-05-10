@@ -2,12 +2,10 @@ from flask import Flask, jsonify, request
 from pymongo import MongoClient
 from spider import settings
 from utils.mongoflask import MongoJSONEncoder, ObjectIdConverter
-from flask_cors import CORS
 from redis import StrictRedis
 
 # Flask
 app = Flask(__name__)
-CORS(app)
 app.json_encoder = MongoJSONEncoder
 app.url_map.converters['objectid'] = ObjectIdConverter
 
@@ -21,27 +19,29 @@ users = db.share_users
 redis = StrictRedis.from_url(settings.REDIS_URL)
 
 # Common settings
-page_size = 20
+default_page_size = 10
 
 
 @app.route("/share_files")
 def share_files():
-    items = files.find().skip(get_offset()).limit(page_size)
+    size = int(request.args.get('size', default_page_size))
+    items = files.find().skip(get_offset(size)).limit(size)
     count = files.count()
     return jsonify({
         'total': count,
-        'has_more': get_offset() + page_size < count,
+        'has_more': get_offset(size) + size < count,
         'items': list(items)
     })
 
 
 @app.route("/share_users")
 def share_users():
-    items = users.find().skip(get_offset()).limit(page_size)
+    size = int(request.args.get('size', default_page_size))
+    items = users.find().skip(get_offset(size)).limit(size)
     count = users.count()
     return jsonify({
         'total': count,
-        'has_more': get_offset() + page_size < count,
+        'has_more': get_offset(size) + size < count,
         'items': list(items)
     })
 
@@ -60,9 +60,9 @@ def add_url():
         return repr(e)
 
 
-def get_offset():
+def get_offset(size):
     page = int(request.args.get('page', 1))
-    return (page - 1) * page_size
+    return (page - 1) * size
 
 
 app.run()
