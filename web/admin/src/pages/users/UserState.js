@@ -18,7 +18,7 @@ export const receiveUsers = (json) => ({
 
 export const fetchUsers = (page) => dispatch => {
   dispatch(requestUsers());
-  return fetch('http://127.0.0.1:5000/share_users')
+  return fetch('/share_users')
     .then(response => response.json())
     .then(json => dispatch(receiveUsers(json)));
 };

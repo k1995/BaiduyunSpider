@@ -21,11 +21,7 @@ class Users extends React.Component {
 			{
 				name: "头像",
         options: {
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return (
-              <img width={30} src={value}/>
-            );
-          },
+          customBodyRender: (value, tableMeta, updateValue) => <img alt="头像" width={30} src={value}/>,
         }
 			},
 			"UK",

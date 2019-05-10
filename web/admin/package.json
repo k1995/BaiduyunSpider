@@ -1,6 +1,7 @@
 {
   "name": "flatlogic-material",
   "version": "1.0.0",
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",

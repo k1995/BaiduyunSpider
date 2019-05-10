@@ -11,16 +11,17 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogContentText,
-	DialogTitle
+	DialogTitle,
+  CircularProgress
 } from "@material-ui/core";
 import PageTitle from '../../components/PageTitle';
-import { fetchFiles } from './FileState';
+import { fetchFiles, pushUrl } from './FileState';
 
 
 class Files extends React.Component {
 
 	state = {
-		open: false
+		open: false,
 	};
 
 	switchDialogOpen = () => {
@@ -29,13 +30,25 @@ class Files extends React.Component {
 			})
 	};
 
+	submitUrl = (e) => {
+    e.preventDefault();
+    const { dispatch } = this.props;
+    dispatch(pushUrl(e.target['url'].value))
+			.then((err) => {
+				if(err) {
+          alert(err)
+        }
+    	});
+		this.switchDialogOpen();
+	};
+
 	componentDidMount() {
 		const { dispatch } = this.props;
 		dispatch(fetchFiles());
 	}
 
 	render() {
-		const { files } = this.props['files'];
+		const { files, task } = this.props['files'];
 		let data = files.map(file => [
 			[file['url'], file['server_filename']],
 			format(file['ctime'] * 1000, 'zh_CN'),
@@ -43,55 +56,69 @@ class Files extends React.Component {
 			file['_id'],
 			file['last_updated']]
 		);
+		let columns = [
+      {
+        name: "文件名",
+        options: {
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return (
+              <a href={value[0]}>{value[1]}</a>
+            );
+          },
+        }
+      },
+      "分享时间",
+      "大小",
+      "ID",
+      "更新时间"
+		];
+
+		const AddTask = () => (
+      <Dialog open={this.state.open || task.pushing}
+							onClose={this.switchDialogOpen}>
+        <DialogTitle>新增采集任务</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            请输入分享文件的访问地址。例如：<br/>
+            https://pan.baidu.com/s/17BtXyO-i02gsC7h4QsKexg
+          </DialogContentText>
+          <form id="form" onSubmit={this.submitUrl}>
+            <TextField
+							name="url"
+              autoFocus
+              margin="dense"
+              label="URL"
+              type="url"
+              required
+              fullWidth
+            />
+          </form>
+        </DialogContent>
+        <DialogActions>
+					{task.pushing ? (
+							<CircularProgress size={26} />
+						): (
+							<Button onClick={this.switchDialogOpen} color="primary">
+            取消
+          </Button>)}
+
+          <Button form="form" type="submit" color="primary">
+            提交
+          </Button>
+        </DialogActions>
+      </Dialog>
+		);
 
 		return (
 			<React.Fragment>
 				<PageTitle title="分享的文件" button="新增" onClick={this.switchDialogOpen} />
-				<Dialog open={this.state.open} onClose={this.switchDialogOpen} aria-labelledby="form-dialog-title">
-					<DialogTitle id="form-dialog-title">新增采集任务</DialogTitle>
-					<DialogContent>
-						<DialogContentText>
-							请输入要采集的分享文件的访问地址。<br/>
-							例如：https://pan.baidu.com/s/17BtXyO-i02gsC7h4QsKexg
-						</DialogContentText>
-						<TextField
-							autoFocus
-							margin="dense"
-							id="url"
-							label="URL"
-							type="url"
-							fullWidth
-						/>
-					</DialogContent>
-					<DialogActions>
-						<Button onClick={this.switchDialogOpen} color="primary">
-							取消
-						</Button>
-						<Button onClick={this.switchDialogOpen} color="primary">
-							提交
-						</Button>
-					</DialogActions>
-				</Dialog>
+				<AddTask />
 				<Grid container spacing={32}>
 					<Grid item xs={12}>
 						<MUIDataTable
 							title="文件列表"
 							data={data}
-							columns={[
-								{
-									name: "文件名",
-									options: {
-										customBodyRender: (value, tableMeta, updateValue) => {
-											return (
-												<a href={value[0]}>{value[1]}</a>
-											);
-										},
-									}
-								},
-								"分享时间",
-								"大小",
-								"ID",
-								"更新时间"]}
+							columns={columns}
 							options={{
 								filterType: 'checkbox',
 							}}
