@@ -1,6 +1,4 @@
-# 最新自动登录百度云，抓取订阅用户分享文件请联系邮箱（付费）。
 # BaiduyunSpider
-> 新版本在dev分支开发中。因旧接口失效，master分支代码不可用
 
 包含百度云网盘爬虫、网站前后端、搜索，整套服务。http://www.githubs.cn/project/16085
 
@@ -44,13 +42,6 @@ __TODO__
 近期__TODO__
 - [ ] 重构爬虫 => 采用Node.js
 - [ ] 使用 elasticsearch 搜索引擎
-
-
-## 讨论交流
-
-有任何疑问，请在 [github 中文社区](http://www.githubs.cn/topic/118) 发帖。
-
-[安装教程](http://www.githubs.cn/post/22)
 
 ## License
 
