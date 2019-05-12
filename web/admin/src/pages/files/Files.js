@@ -33,6 +33,10 @@ class Files extends React.Component {
 	};
 
 	refetch = () => {
+		if(this.state.open) {
+			// Dialog打开的时候不刷新，防止窗口抖动
+			return;
+		}
 		this.props.dispatch(fetchFiles(this.state.page + 1, this.state.pageSize));
 	};
 
