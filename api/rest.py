@@ -1,11 +1,18 @@
-from flask import Flask, jsonify, request
-from pymongo import MongoClient
-from spider import settings
-from utils.mongoflask import MongoJSONEncoder, ObjectIdConverter
-from redis import StrictRedis
+import sys
+import os
+
+try:
+    sys.path.append("..")
+    from flask import Flask, jsonify, request, send_from_directory
+    from pymongo import MongoClient
+    from spider import settings
+    from utils.mongoflask import MongoJSONEncoder, ObjectIdConverter
+    from redis import StrictRedis
+except Exception as e:
+    raise e
 
 # Flask
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../web/admin/build/')
 app.json_encoder = MongoJSONEncoder
 app.url_map.converters['objectid'] = ObjectIdConverter
 
@@ -60,9 +67,23 @@ def add_url():
         return repr(e)
 
 
+# Serve React App
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
+
+
 def get_offset(size):
     page = int(request.args.get('page', 1))
     return (page - 1) * size
 
 
-app.run()
+def run():
+    app.run(use_reloader=True,)
+
+if __name__ == "__main__":
+    run()
