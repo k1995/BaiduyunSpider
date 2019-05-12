@@ -22,12 +22,18 @@ class Files extends React.Component {
 
 	state = {
 		open: false,
+		page: 1,
+		pageSize: 10,
 	};
 
 	switchDialogOpen = () => {
 		this.setState({
 				open: !this.state.open
 			})
+	};
+
+	refetch = () => {
+		this.props.dispatch(fetchFiles(this.state.page + 1, this.state.pageSize));
 	};
 
 	submitUrl = (e) => {
@@ -43,7 +49,12 @@ class Files extends React.Component {
 	};
 
 	componentDidMount() {
-    this.props.dispatch(fetchFiles());
+		this.refetch();
+		this.timer = setInterval(this.refetch, 5000);
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.timer);
 	}
 
 	render() {
@@ -76,9 +87,14 @@ class Files extends React.Component {
 		const options = {
       count: total,
       serverSide: true,
+			page: this.state.page,
+			rowsPerPage: this.state.pageSize,
       onTableChange: (action, tableState) => {
-        const page = tableState.page + 1;
-        this.props.dispatch(fetchFiles(page, tableState.rowsPerPage));
+        this.setState({
+					page: tableState.page,
+					pageSize: tableState.rowsPerPage
+				});
+        setTimeout(() => this.refetch(), 0);
       }
     };
 

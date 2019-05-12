@@ -4,13 +4,26 @@ import MUIDataTable from "mui-datatables";
 import { connect } from 'react-redux'
 import PageTitle from '../../components/PageTitle';
 import { fetchUsers } from './UserState'
-import {fetchFiles} from "../files/FileState";
 
 
 class Users extends React.Component {
 
+  state = {
+    page: 1,
+    pageSize: 10,
+  };
+
+  refetch = () => {
+    this.props.dispatch(fetchUsers(this.state.page + 1, this.state.pageSize));
+  };
+
   componentDidMount() {
-    this.props.dispatch(fetchUsers());
+    this.refetch();
+    this.timer = setInterval(this.refetch, 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   render() {
@@ -31,9 +44,14 @@ class Users extends React.Component {
     const options = {
       count: total,
       serverSide: true,
+      page: this.state.page,
+      rowsPerPage: this.state.pageSize,
       onTableChange: (action, tableState) => {
-        const page = tableState.page + 1;
-        this.props.dispatch(fetchUsers(page, tableState.rowsPerPage));
+        this.setState({
+          page: tableState.page,
+          pageSize: tableState.rowsPerPage
+        });
+        setTimeout(() => this.refetch(), 0);
       }
     };
 
