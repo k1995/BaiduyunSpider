@@ -59,9 +59,15 @@ curl -X POST http://localhost:5000/addUrl \
 后台管理界面 
 ![admin](screenshot/admin.gif)
 
+## 技术支持
 
-## 说明
-GitHub上开源的版本目前只能采集公开的分享，且需要手动提交`URL`，只有后台管理界面。高级版可以采集私密和公开分享，自动订阅`URL`采集列表，无需手动提交链接。包含客户端`Web`界面。如有需要请邮件联系：
+- 运行部署
 
-邮箱：![email](screenshot/email.png)
+  100RMB，安装部署，包教包会 :)
+
+- 获取高级版本
+
+  GitHub上开源的版本目前只能采集公开的分享，且需要手动提交`URL`，只有后台管理界面。高级版可以采集私密和公开分享，自动订阅`URL`采集列表，无需手动提交链接。包含客户端`Web`界面
+
+联系邮箱：![email](screenshot/email.png)
 
