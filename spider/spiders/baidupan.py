@@ -3,7 +3,7 @@ import datetime
 
 import re
 import json
-
+from urllib.parse import unquote
 import scrapy
 from spider.items import FileItem, UserItem
 from scrapy_redis.spiders import RedisSpider
@@ -50,6 +50,7 @@ class BaidupanSpider(RedisSpider):
             share=int(file["category"]),
             path_md5=file["path_md5"],
             path=file["path"],
+            parent_path=unquote(file["parent_path"]),
             md5=file["md5"],
             thumbs=file.get("thumbs"),
             dCnt=int(data["dCnt"]),
@@ -57,6 +58,7 @@ class BaidupanSpider(RedisSpider):
             expiredType=data["expiredType"],
             expires=int(data["ctime"]) + data["expiredType"] if data["expiredType"] > 0 else 0,
             sharesuk=data["sharesuk"],
+            shareid=data["shareid"],
             pansuk=data["pansuk"],
             uk=data["uinfo"]['uk'],
             last_updated=datetime.datetime.utcnow()
