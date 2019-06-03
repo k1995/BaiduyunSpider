@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+import logging
 
 import re
 import json
@@ -18,15 +19,14 @@ class BaidupanSpider(RedisSpider):
 
     def parse(self, response):
         if response.request.meta.get('redirect_urls'):
-            yield self.process_error(response)
+            yield from self.process_error(response)
             return
         try:
             yield from self.parse_data(response)
         except:
             pass
 
-    @staticmethod
-    def parse_data(response):
+    def parse_data(self, response):
         pattern = r'window.yunData = ([\s\S]*?});'
         data = json.loads(re.search(pattern, response.text).group(1))
         files = data.get("file_list", [])
@@ -73,14 +73,12 @@ class BaidupanSpider(RedisSpider):
             last_updated=datetime.datetime.utcnow()
         )
 
-    @staticmethod
-    def process_error(response):
+    def process_error(self, response):
+        origin_url = response.request.meta.get('redirect_urls')[0]
         if "error.html" in response.url:
-            # TODO: 404
-            pass
+            logging.info("404 %s", origin_url)
         elif "wap/error" in response.url:
-            # TODO: 分享已取消或删除或过期
-            pass
+            logging.info("分享已取消或删除或过期 %s", origin_url)
         elif "wap/init" in response.url:
             # TODO: 密码输入
             pass
