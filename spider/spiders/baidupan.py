@@ -4,6 +4,7 @@ import logging
 
 import re
 import json
+import traceback
 from urllib.parse import unquote
 import scrapy
 from spider.items import FileItem, UserItem
@@ -19,19 +20,21 @@ class BaidupanSpider(RedisSpider):
 
     def parse(self, response):
         if response.request.meta.get('redirect_urls'):
-            yield from self.process_error(response)
+            yield from self.process_redirect(response)
             return
         try:
             yield from self.parse_data(response)
         except:
-            pass
+            logging.error("解析错误 %s", response.url)
+            traceback.print_exc()
 
     def parse_data(self, response):
         pattern = r'window.yunData = ([\s\S]*?});'
         data = json.loads(re.search(pattern, response.text).group(1))
         files = data.get("file_list", [])
         if len(files) < 1:
-            return 0
+            logging.error("len(files) < 1 %s", response.url)
+            return
         file = files[0]
 
         yield FileItem(
@@ -73,14 +76,13 @@ class BaidupanSpider(RedisSpider):
             last_updated=datetime.datetime.utcnow()
         )
 
-    def process_error(self, response):
+    def process_redirect(self, response):
         origin_url = response.request.meta.get('redirect_urls')[0]
         if "error.html" in response.url:
             logging.info("404 %s", origin_url)
         elif "wap/error" in response.url:
-            logging.info("分享已取消或删除或过期 %s", origin_url)
+            logging.info("分享已取消或过期 %s", origin_url)
         elif "wap/init" in response.url:
-            # TODO: 密码输入
-            pass
+            logging.info("开源版本暂不支持私密分享 %s", origin_url)
         else:
-            pass
+            logging.info("Unknown 302 %s => %s", origin_url, response.url)
