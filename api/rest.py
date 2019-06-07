@@ -58,7 +58,10 @@ def add_url():
     from spider.spiders.baidupan import BaidupanSpider
     queue_key = BaidupanSpider.name + ":start_urls"
     url = request.form.get('url')
-    if url is None or not url.startswith("https://pan.baidu.com/s/"):
+    if url is None or not (
+                url.startswith("https://pan.baidu.com/s/") or
+                url.startswith("https://pan.baidu.com/share/link")
+    ):
         return "URL格式不对"
     try:
         redis.lpush(queue_key, url)
@@ -83,7 +86,8 @@ def get_offset(size):
 
 
 def run():
-    app.run(use_reloader=True,)
+    app.run(use_reloader=True, )
+
 
 if __name__ == "__main__":
     run()
