@@ -35,37 +35,37 @@ class BaidupanSpider(RedisSpider):
         if len(files) < 1:
             logging.error("len(files) < 1 %s", response.url)
             return
-        file = files[0]
 
-        yield FileItem(
-            url=response.url,
-            fs_id=file["fs_id"],
-            server_filename=file["server_filename"],
-            size=int(file['size']),
-            server_mtime=int(file["server_mtime"]),
-            server_ctime=int(file["server_ctime"]),
-            local_mtime=int(file["local_mtime"]),
-            local_ctime=int(file["local_ctime"]),
-            isdir=int(file["isdir"]),
-            isdelete=int(file["isdelete"]),
-            status=int(file["status"]),
-            category=int(file["category"]),
-            share=int(file["category"]),
-            path_md5=file["path_md5"],
-            path=file["path"],
-            parent_path=unquote(file["parent_path"]),
-            md5=file["md5"],
-            thumbs=file.get("thumbs"),
-            dCnt=int(data["dCnt"]),
-            ctime=int(data["ctime"]),
-            expiredType=data["expiredType"],
-            expires=int(data["ctime"]) + data["expiredType"] if data["expiredType"] > 0 else 0,
-            sharesuk=data["sharesuk"],
-            shareid=data["shareid"],
-            pansuk=data["pansuk"],
-            uk=data["uinfo"]['uk'],
-            last_updated=datetime.datetime.utcnow()
-        )
+        for file in files:
+            yield FileItem(
+                url=response.url,
+                fs_id=file["fs_id"],
+                server_filename=file["server_filename"],
+                size=int(file['size']),
+                server_mtime=int(file["server_mtime"]),
+                server_ctime=int(file["server_ctime"]),
+                local_mtime=int(file["local_mtime"]),
+                local_ctime=int(file["local_ctime"]),
+                isdir=int(file["isdir"]),
+                isdelete=int(file["isdelete"]),
+                status=int(file["status"]),
+                category=int(file["category"]),
+                share=int(file["category"]),
+                path_md5=file["path_md5"],
+                path=file["path"],
+                parent_path=unquote(file["parent_path"]),
+                md5=file["md5"],
+                thumbs=file.get("thumbs"),
+                dCnt=int(data["dCnt"]),
+                ctime=int(data["ctime"]),
+                expiredType=data["expiredType"],
+                expires=int(data["ctime"]) + data["expiredType"] if data["expiredType"] > 0 else 0,
+                sharesuk=data["sharesuk"],
+                shareid=data["shareid"],
+                pansuk=data["pansuk"],
+                uk=data["uinfo"]['uk'],
+                last_updated=datetime.datetime.utcnow()
+            )
 
         yield UserItem(
             uname=data["uinfo"]['uname'],
