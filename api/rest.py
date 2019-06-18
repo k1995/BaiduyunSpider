@@ -1,14 +1,15 @@
 import sys
 import os
 
+
 try:
     sys.path.append("..")
     from flask import Flask, jsonify, request, send_from_directory
     from pymongo import MongoClient
     from spider import settings
     from utils.mongoflask import MongoJSONEncoder, ObjectIdConverter
+    from utils import normalize_shareurl
     from redis import StrictRedis
-    from urllib import parse
 except Exception as e:
     raise e
 
@@ -58,21 +59,8 @@ def share_users():
 def add_url():
     from spider.spiders.baidupan import BaidupanSpider
     queue_key = BaidupanSpider.name + ":start_urls"
-
-    # 标准化URL
     try:
-        u = parse.urlparse(request.form.get('url'))
-        if u.path.startswith('/s/'):
-            url = "https://pan.baidu.com/s/" + u.path
-        elif u.path.startswith('/share/link'):
-            query = parse.parse_qs(u.query)
-            url = "https://pan.baidu.com/share/link?shareid={}&uk={}".format(query.shareid, query.uk)
-        else:
-            return "URL格式不支持"
-    except:
-        return "URL参数错误"
-
-    try:
+        url = normalize_shareurl(request.form.get('url'))
         redis.lpush(queue_key, url)
         return "ok"
     except Exception as e:
