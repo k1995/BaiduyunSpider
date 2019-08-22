@@ -58,3 +58,7 @@ curl -X POST http://localhost:5000/addUrl \
 
 后台管理界面 
 ![admin](screenshot/admin.gif)
+
+
+## 技术支持
+提供高级版本，包含额外的搜索引擎和私密分享采集部分，暂仅用于毕业设计。联系邮箱：![](screenshot/email.png)
